@@ -19,6 +19,11 @@ const runProcess = () => {
 	console.log(`Using BambuStudio configuration at ${JSON.stringify(bambuDir)}`);
 	console.log(`Using output directory at ${JSON.stringify(outputDir)}`);
 
+	if (config.cleanOutputDir) {
+		console.log("Cleaning output directory");
+		fse.emptyDirSync(outputDir);
+	}
+
 	for (let clone of config.clone) {
 		console.log(`Cloning ${clone.type} from "${clone.from}" to "${clone.to}"`);
 

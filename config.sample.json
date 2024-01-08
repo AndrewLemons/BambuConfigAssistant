@@ -1,6 +1,7 @@
 {
 	"bambuConfigDir": "/path/to/appdata/BambuStudio (not the application itself)",
 	"outputDir": "./output (can be undefined)",
+	"cleanOutputDir": true,
 	"clone": [
 		{
 			"type": "machine",
