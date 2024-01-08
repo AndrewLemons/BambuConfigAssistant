@@ -1,0 +1,9 @@
+# Outputs
+output/
+dist/
+
+# Node
+node_modules/
+
+# Configuration
+/config.json

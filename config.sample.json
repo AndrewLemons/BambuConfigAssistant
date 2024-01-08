@@ -1,0 +1,32 @@
+{
+	"bambuConfigDir": "/path/to/appdata/BambuStudio (not the application itself)",
+	"outputDir": "./output (can be undefined)",
+	"clone": [
+		{
+			"type": "machine",
+			"from": "Bambu Lab P1S 0.4 nozzle",
+			"to": "Printer 1",
+			"user": "default",
+			"overwrite": {
+				"printer_model": "Demo",
+				"default_print_profile": ["0.20mm Standard @Demo"],
+				"default_filament_profile": ["PLA @Demo"]
+			}
+		},
+		{
+			"type": "process",
+			"from": "0.20mm Standard @BBL X1C",
+			"to": "0.20mm Standard @Demo",
+			"user": "default",
+			"overwrite": {
+				"compatible_printers": ["Demo"]
+			}
+		},
+		{
+			"type": "filament",
+			"from": "Generic PLA",
+			"to": "PLA @Demo",
+			"compatible_printers": ["Demo"]
+		}
+	]
+}
