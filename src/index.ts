@@ -1,4 +1,5 @@
 import path from "node:path";
+import crypto from "node:crypto";
 import * as fse from "fs-extra";
 import BambuStudioConfig from "./BambuStudioConfig";
 import { Settings } from "./Settings";
@@ -44,8 +45,19 @@ const runProcess = () => {
 			...clone.overwrite,
 		});
 
+		// Create settings ID
+		let settingsId = crypto
+			.createHash("sha256")
+			.update(settings.name)
+			.digest("hex");
+
 		// Save settings
-		bambu.saveUserSettings(settings, clone.user ?? "default", outputDir);
+		bambu.saveUserSettings(
+			settings,
+			clone.user ?? "default",
+			settingsId,
+			outputDir,
+		);
 	}
 };
 

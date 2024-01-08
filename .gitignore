@@ -7,3 +7,6 @@ node_modules/
 
 # Configuration
 /config.json
+
+# MacOS
+.DS_Store

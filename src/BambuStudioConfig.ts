@@ -83,7 +83,12 @@ export default class BambuStudioConfig {
 		return settings;
 	}
 
-	saveUserSettings(settings: any, user: string, outputPath: string = ""): void {
+	saveUserSettings(
+		settings: any,
+		user: string,
+		id: string,
+		outputPath: string = "",
+	): void {
 		let settingsDir = path.resolve(
 			this.dir,
 			outputPath,
@@ -99,7 +104,10 @@ export default class BambuStudioConfig {
 
 		// Write the files
 		fse.writeJSONSync(settingsFilePath, settings, { spaces: 4 });
-		fse.writeFileSync(settingsInfoPath, BambuStudioConfig.createInfoContent());
+		fse.writeFileSync(
+			settingsInfoPath,
+			BambuStudioConfig.createInfoContent(user, settings.type, id, ""),
+		);
 
 		// Re-index
 		this.index();
@@ -124,9 +132,22 @@ export default class BambuStudioConfig {
 		return settings;
 	}
 
-	private static createInfoContent() {
+	private static createInfoContent(
+		user: string,
+		type: SettingsType,
+		id: string,
+		baseId: string,
+	) {
 		let timestamp = (new Date().getTime() / 1000).toFixed(0);
-		return `sync_info = \nuser_id = \nsetting_id = \nbase_id = \nupdated_time = ${timestamp}\n`;
+
+		let idPrefix = "";
+		if (type === SettingsType.Machine) idPrefix = "PMUS";
+		if (type === SettingsType.Process) idPrefix = "PPUS";
+		if (type === SettingsType.Filament) idPrefix = "PFUS";
+
+		return `sync_info = \nuser_id = ${user}\nsetting_id = ${idPrefix}${id
+			.substring(0, 14)
+			.padEnd(14, "0")}\nbase_id = ${baseId}\nupdated_time = ${timestamp}\n`;
 	}
 }
 
